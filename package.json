@@ -1,0 +1,86 @@
+{
+  "name": "cryptocurrency",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run server & npm run serve",
+    "server": "nodemon server/index.js",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "D": "^1.0.0",
+    "nodemon": "^1.18.8",
+    "vue": "^2.5.17"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.3",
+    "@vue/cli-plugin-eslint": "^3.0.3",
+    "@vue/cli-service": "^3.0.3",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true,
+      "jest": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {
+      "class-methods-use-this": "off",
+      "func-names": "off",
+      "import/extensions": "off",
+      "import/no-extraneous-dependencies": "off",
+      "import/prefer-default-export": "off",
+      "object-shorthand": "off",
+      "indent": [
+        "error",
+        2
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
+      "no-console": "off",
+      "no-param-reassign": [
+        "error",
+        {
+          "props": false
+        }
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "quote-props": [
+        "error",
+        "consistent"
+      ],
+      "semi": [
+        "error",
+        "always"
+      ],
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ]
+    },
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
