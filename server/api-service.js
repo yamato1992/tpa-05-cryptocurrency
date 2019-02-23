@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const fetch = require('node-fetch');
 const moment = require('moment-timezone');
-moment.tz.setDefault('Asisa/Tokyo');
+moment.tz.setDefault('Asia/Tokyo');
 const numeral = require('numeral');
 
 const getHistoricalData = async function(cryptocurrency, target) {
