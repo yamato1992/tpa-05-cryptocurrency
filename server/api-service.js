@@ -39,8 +39,28 @@ const getHistoricalData = async function(cryptocurrency, target) {
   };
 };
 
-const getMarketInformation = function() {
-  return Promise.resolve({});
+const getMarketInformation = async function(cryptocurrency, target) {
+  const apiUrl = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${cryptocurrency}&convert=${target}`;
+  const apiKey = '544fb907-9061-4e83-8d30-34e58e2c836c';
+  const fetchOptions = {
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CMC_PRO_API_KEY': apiKey,
+    }
+  };
+
+  const data = await fetch(apiUrl, fetchOptions)
+    .then(res => res.json())
+    .then(json => json.data);
+
+  const targetQuote = data[cryptocurrency].quote[target];
+  const marketCap = numeral(targetQuote.market_cap).format('0.00 a');
+  const volume24Hour = numeral(targetQuote.volume_24h).format('0.00 a');
+
+  return {
+    marketCap,
+    volume24Hour,
+  };
 };
 
 const applyPriceFormat = function(price) {
