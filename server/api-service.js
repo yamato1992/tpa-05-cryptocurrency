@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const fetch = require('node-fetch');
 const moment = require('moment-timezone');
 moment.tz.setDefault('Asisa/Tokyo');
@@ -41,7 +43,7 @@ const getHistoricalData = async function(cryptocurrency, target) {
 
 const getMarketInformation = async function(cryptocurrency, target) {
   const apiUrl = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${cryptocurrency}&convert=${target}`;
-  const apiKey = '544fb907-9061-4e83-8d30-34e58e2c836c';
+  const apiKey = process.env.COIN_MARKET_CAP_API_KEY;
   const fetchOptions = {
     headers: {
       'Content-Type': 'application/json',
