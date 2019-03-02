@@ -10,7 +10,7 @@
       <Metric :metricName='metrics.volume.name' :metricValue='metrics.volume.value'></Metric>
       <Metric :metricName='metrics.cap.name' :metricValue='metrics.cap.value'></Metric>
     </div>
-    <Chart></Chart>
+    <Chart :times='times' :prices='prices'></Chart>
     <h5 class='error-message'>{{ historicalDataErrorMessage }}</h5>
     <h5 class='error-message'>{{ marketInformationErrorMessage }}</h5>
     <h5>TECH PLAY ACADEMY</h5>
@@ -31,6 +31,8 @@ export default {
     return {
       cryptocurrency: 'BTC',
       target: 'JPY',
+      times: [],
+      prices: [],
       metrics: {
         rate: { name: '1 cryptocurrency <> target', value: '-'},
         change: { name: '24 Hour Change', value: '-'},
@@ -57,7 +59,8 @@ export default {
           if (data.err) {
             this.historicalDataErrorMessage = data.err;
           } else {
-            console.log(data);
+            this.times = data.times;
+            this.prices = data.prices;
             this.metrics.rate.value = data.lastPrice;
             this.metrics.change.value = data.changeIn24Hour;
             this.metrics.high.value = data.highIn24Hour;
@@ -70,7 +73,6 @@ export default {
           if (data.err) {
             this.marketInformationErrorMessage = data.err;
           } else {
-            console.log(data);
             this.metrics.volume.value = data.volume24Hour;
             this.metrics.cap.value = data.marketCap;
           }
