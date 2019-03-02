@@ -21,7 +21,7 @@ const getHistoricalData = async function(cryptocurrency, target) {
 
   data.forEach((item) => {
     const time = moment.unix(item.time).format('YYYY-MM-DD HH:mm');
-    const price = applyPriceFormat(item.close);
+    const price = numeral(item.close).value();
     highIn24Hour = item.high > highIn24Hour ? item.high : highIn24Hour;
     lowIn24Hour = item.low > lowIn24Hour ? item.low : lowIn24Hour;
     times.push(time);
@@ -56,8 +56,8 @@ const getMarketInformation = async function(cryptocurrency, target) {
     .then(json => json.data);
 
   const targetQuote = data[cryptocurrency].quote[target];
-  const marketCap = numeral(targetQuote.market_cap).format('0.00 a');
-  const volume24Hour = numeral(targetQuote.volume_24h).format('0.00 a');
+  const marketCap = numeral(targetQuote.market_cap).format('0.00 a').toUpperCase();
+  const volume24Hour = numeral(targetQuote.volume_24h).format('0.00 a').toUpperCase();
 
   return {
     marketCap,
