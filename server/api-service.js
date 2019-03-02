@@ -6,7 +6,7 @@ moment.tz.setDefault('Asia/Tokyo');
 const numeral = require('numeral');
 
 const getHistoricalData = async function(cryptocurrency, target) {
-  const DATA_LIMIT = 10;
+  const DATA_LIMIT = 1440;
   const apiUrl = `https://min-api.cryptocompare.com/data/histominute?fsym=${cryptocurrency}&tsym=${target}&limit=${DATA_LIMIT}`;
   const data = await fetch(apiUrl)
     .then(res => res.json())

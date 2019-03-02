@@ -10,7 +10,7 @@ export default {
   name: 'Metric',
   props: {
     metricName: String,
-    metricValue: Number,
+    metricValue: String,
   },
 };
 </script>
