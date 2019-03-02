@@ -10,7 +10,7 @@
       <Metric :metricName='metrics.volume.name' :metricValue='metrics.volume.value'></Metric>
       <Metric :metricName='metrics.cap.name' :metricValue='metrics.cap.value'></Metric>
     </div>
-    <Chart :times='times' :prices='prices'></Chart>
+    <Chart v-if='loaded' :x-axis='times' :y-axis='prices' :label='cryptocurrency'></Chart>
     <h5 class='error-message'>{{ historicalDataErrorMessage }}</h5>
     <h5 class='error-message'>{{ marketInformationErrorMessage }}</h5>
     <h5>TECH PLAY ACADEMY</h5>
@@ -43,6 +43,7 @@ export default {
       },
       historicalDataErrorMessage: '',
       marketInformationErrorMessage: '',
+      loaded: false,
     };
   },
   mounted: function() {
@@ -53,30 +54,27 @@ export default {
     setMetricName: function(cryptocurrency, target) {
       this.metrics.rate.name = `1 ${cryptocurrency} <> ${target}`;
     },
-    setMetricValue: function(cryptocurrency, target) {
-      this.fetchHistoricalData(cryptocurrency, target)
-        .then(data => {
-          if (data.err) {
-            this.historicalDataErrorMessage = data.err;
-          } else {
-            this.times = data.times;
-            this.prices = data.prices;
-            this.metrics.rate.value = data.lastPrice;
-            this.metrics.change.value = data.changeIn24Hour;
-            this.metrics.high.value = data.highIn24Hour;
-            this.metrics.low.value = data.lowIn24Hour;
-          }
-        })
+    setMetricValue: async function(cryptocurrency, target) {
+      const historicalData = await this.fetchHistoricalData(cryptocurrency, target)
+      if (historicalData.err) {
+        this.historicalDataErrorMessage = historicalData.err;
+      } else {
+        this.times = historicalData.times;
+        this.prices = historicalData.prices;
+        this.metrics.rate.value = historicalData.lastPrice;
+        this.metrics.change.value = historicalData.changeIn24Hour;
+        this.metrics.high.value = historicalData.highIn24Hour;
+        this.metrics.low.value = historicalData.lowIn24Hour;
+        this.loaded = true;
+      }
 
-      this.fetchMarketInformation(cryptocurrency, target)
-        .then(data => {
-          if (data.err) {
-            this.marketInformationErrorMessage = data.err;
-          } else {
-            this.metrics.volume.value = data.volume24Hour;
-            this.metrics.cap.value = data.marketCap;
-          }
-        })
+      const marketInformationData = await this.fetchMarketInformation(cryptocurrency, target);
+      if (marketInformationData.err) {
+        this.marketInformationErrorMessage = marketInformationData.err;
+      } else {
+        this.metrics.volume.value = marketInformationData.volume24Hour;
+        this.metrics.cap.value = marketInformationData.marketCap;
+      }
     },
     fetchHistoricalData: function(cryptocurrency, target) {
       const path = `/api/historical-data?cryptocurrency=${cryptocurrency}&target=${target}`;

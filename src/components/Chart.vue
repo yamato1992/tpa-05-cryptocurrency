@@ -4,30 +4,25 @@ import { Line } from 'vue-chartjs';
 export default {
   name: 'Chart',
   props: {
-    times: Array,
-    prices: Array,
-  },
-  data: function() {
-    return {
-      chardata: {
-        labels: this.times,
-        datasets: [{
-          label: 'BTC',
-          data: this.prices,
-          backgroundColor: 'rgba(20, 160, 255, 0.5)',
-          pointBackgroundCOlor: 'rgba(20, 160, 255, 0.5)',
-        },]
-      },
-      options: {
-        maintainAspectRatio: false,
-      }
-    };
+    xAxis: Array,
+    yAxis: Array,
+    label: String,
   },
   extends: Line,
   mounted: function() {
-    
-    this.renderChart(this.chardata, this.options);
-  }
+    this.renderChart({
+      labels: this.xAxis,
+      datasets: [{
+        label: this.label,
+        data: this.yAxis,
+        backgroundColor: 'rgba(20, 160, 255, 0.5)',
+        pointBackgroundCOlor: 'rgba(20, 160, 255, 0.5)',
+      }], 
+    },
+    {
+      maintainAspectRatio: false,
+    });
+  },
 };
 </script>
 
