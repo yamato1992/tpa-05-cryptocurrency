@@ -12,12 +12,14 @@
   },
   "dependencies": {
     "D": "^1.0.0",
+    "chart.js": "^2.7.3",
     "dotenv": "^6.2.0",
     "moment-timezone": "^0.5.23",
     "node-fetch": "^2.3.0",
     "nodemon": "^1.18.8",
     "numeral": "^2.0.6",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-chartjs": "^3.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.3",
